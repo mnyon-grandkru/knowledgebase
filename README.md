@@ -33,9 +33,9 @@ If there’s an area that’s outside a known roadmap, there’s a place for it 
 
 Sometimes this knowledge is helpful to others.
 
-    [Here’s an issue where a fix I used was noticed and I helped someone else.](https://github.com/mnyon-grandkru/knowledgebase/issues/10)
-    [Here’s an issue where multiple people discussed multiple approaches and we all found something that works for us.](https://github.com/mnyon-grandkru/knowledgebase/issues/19)
-    [Here’s a collaboration with a mentee.](https://github.com/mnyon-grandkru/knowledgebase/issues/95)
+[Here’s an issue where a fix I used was noticed and I helped someone else.](https://github.com/mnyon-grandkru/knowledgebase/issues/10)
+[Here’s an issue where multiple people discussed multiple approaches and we all found something that works for us.](https://github.com/mnyon-grandkru/knowledgebase/issues/19)
+[Here’s a collaboration with a mentee.](https://github.com/mnyon-grandkru/knowledgebase/issues/95)
 
 ## Knowledgebase Is for Affirmation
 
