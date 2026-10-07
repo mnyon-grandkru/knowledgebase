@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Knowledgebase Admin</title>
+  <meta name="description" content="Review panel for the mnyon-grandkru/knowledgebase issue tracker.">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js" defer></script>
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">KB</span>
+      <div>
+        <h1>Knowledgebase Admin</h1>
+        <p class="sub" id="snapshot-meta">Loading…</p>
+      </div>
+    </div>
+    <div class="top-actions">
+      <label class="search">
+        <span class="sr-only">Search issues</span>
+        <input id="search" type="search" placeholder="Search title, body, comments…  ( / )" autocomplete="off">
+      </label>
+      <button id="refresh-btn" class="btn ghost" type="button" title="Fetch live from GitHub">Refresh</button>
+      <button id="settings-btn" class="btn ghost" type="button" aria-haspopup="dialog">Token</button>
+    </div>
+  </header>
+
+  <main class="layout" id="layout">
+    <aside class="sidebar" aria-label="Filters">
+      <nav class="views" id="views" aria-label="Views"></nav>
+      <section class="label-filter">
+        <div class="section-head">
+          <h2>Labels</h2>
+          <button id="clear-labels" class="link" type="button">Clear</button>
+        </div>
+        <div id="labels" class="chips"></div>
+      </section>
+    </aside>
+
+    <section class="list-pane" aria-label="Issues">
+      <div class="list-head">
+        <span id="result-count" class="muted"></span>
+        <label class="sort">Sort
+          <select id="sort">
+            <option value="updated">Recently updated</option>
+            <option value="created">Newest</option>
+            <option value="number">Issue number</option>
+          </select>
+        </label>
+      </div>
+      <ol id="list" class="issue-list" tabindex="0"></ol>
+    </section>
+
+    <article class="detail-pane" id="detail" aria-live="polite">
+      <div class="empty">
+        <p>Select an issue to review.</p>
+        <p class="muted keys"><kbd>j</kbd>/<kbd>k</kbd> move · <kbd>/</kbd> search · <kbd>c</kbd> KB candidate · <kbd>p</kbd> publish · <kbd>o</kbd> open on GitHub</p>
+      </div>
+    </article>
+  </main>
+
+  <dialog id="settings">
+    <form method="dialog" class="dialog-body">
+      <h2>GitHub token</h2>
+      <p class="muted">Optional. Lets this browser label, close, reopen and comment on issues, and refresh live data. Use a fine-grained token scoped to this repo with <strong>Issues: read &amp; write</strong>. Stored only in this browser.</p>
+      <label class="field">Token
+        <input id="token-input" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_…">
+      </label>
+      <p id="token-status" class="muted"></p>
+      <div class="dialog-actions">
+        <button id="token-clear" class="btn ghost" type="button">Remove</button>
+        <button id="token-save" class="btn primary" type="button">Save</button>
+        <button class="btn ghost" value="close">Close</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" hidden></div>
+</body>
+</html>

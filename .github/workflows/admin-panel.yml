@@ -1,0 +1,73 @@
+name: Admin panel
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  issues:
+  issue_comment:
+  schedule:
+    - cron: "17 9 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: admin-panel-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Snapshot issues
+        run: node scripts/build-data.mjs "$GITHUB_REPOSITORY" admin/data/issues.json
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Browser smoke test
+        run: |
+          pip install --quiet playwright==1.56.0
+          python -m playwright install --with-deps chromium
+          python test/smoke_test.py
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: screenshots
+          path: test-results/
+
+      - if: github.event_name != 'pull_request'
+        uses: actions/configure-pages@v5
+
+      - if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: admin
+
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
