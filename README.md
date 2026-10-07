@@ -40,3 +40,15 @@ Sometimes this knowledge is helpful to others.
 ## Knowledgebase Is for Affirmation
 
 This knowledgebase is helpful to remind me of all the problems that I solve. Projects like EBWiki and QueerGlobal are large enough to have their own project boards and task lists; this helps me keep track of larger or smaller items. Those reminders are encouraging as well as evidence. Sometimes those reminders have excellent value when I get affected by doubt, or intrusive thoughts. This is one habit I consider an essential part of successful development.
+
+# Admin panel
+
+`admin/` is a static review panel for these issues, deployed to GitHub Pages by `.github/workflows/admin-panel.yml` (on push, on any issue or comment change, and daily).
+
+- **Views**: Needs review, Open, Resolved, Closed with no fix, KB candidates, KB published.
+- **Filters**: full-text search across titles, bodies and comments; label chips; sort.
+- **KB workflow**: `kb:candidate` → `kb:published` labels mark fixes worth promoting into the knowledgebase.
+- **Actions** (optional fine-grained token with *Issues: read & write*, stored only in your browser): label, close, reopen, comment, live refresh.
+- **Keys**: `j`/`k` move, `/` search, `c` candidate, `p` publish, `o` open on GitHub.
+
+Local: `npm ci && npm run build:data && npm run serve`. Tests: `npm test && python3 test/smoke_test.py`.
